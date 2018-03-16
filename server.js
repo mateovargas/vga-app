@@ -37,7 +37,7 @@ var routes = require('./controllers/appController.js');
 
 app.use(routes);
 
-app.use(cors());
+
 //app.use(allowCrossDomain);
 
 //db.sequelize.sync().then(function () {

@@ -12,7 +12,7 @@ function createSearchTerm(param){
 
     var termString = "";
     for(var i = 0; i < termArray.length; i++){
-        termString = termString + " " + termArray[i];
+        termString = termString + termArray[i] + " ";
     }
 
     return termString;
@@ -21,14 +21,15 @@ function createSearchTerm(param){
 
 router.get("/", function(req, res){
 
+    res.render('index');
 
 });
 
-router.get("/:game", function(req, res){
+router.get("/api/:game", function(req, res){
 
+    console.log('getting Route');
     console.log(req.params.game);
-
-
+    console.log(createSearchTerm(req.params.game));
     igdbClient.games({
         search: createSearchTerm(req.params.game),
         limit: 1
@@ -46,8 +47,37 @@ router.get("/:game", function(req, res){
                 game: result.body[0]
             };
 
-            res.render("game", hbsObject);
+            console.log(hbsObject);
+
+            res.json(result.body[0]);
         });
 });
+
+router.get("/:id", function(req, res){
+
+    igdbClient.games({
+        ids: [
+            req.params.id
+        ]},
+        [
+            'name',
+            'rating',
+            'summary',
+            'storyline',
+            'aggregated_rating'
+        ]).then(function (result) {
+            console.log(result);
+
+            var hbsObject = {
+                game: result.body[0]
+            };
+
+            console.log(hbsObject);
+
+            res.render("game", hbsObject);
+        });
+
+});
+
 
 module.exports = router;
