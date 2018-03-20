@@ -20,22 +20,18 @@ app.use(methodOverride('_method'));
 // Set Handlebars as the view engine
 var exphbs = require('express-handlebars');
 
-//var allowCrossDomain = function (req, res, next) {
- //   res.header('Access-Control-Allow-Origin', "*");
-   // res.header('Access-Control-Allow-Methods', 'GET');
-    //res.header('Access-Control-Allow-Headers', 'Content-Type');
-    //next();
-//}
-
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 
 // Import routes and give the server access to them
-var routes = require('./controllers/appController.js');
+var igdbRoutes = require('./controllers/igdbController.js');
+var sentimentRoutes = require('./controllers/sentimentController.js');
 
-app.use(routes);
+app.use(igdbRoutes);
+app.use(sentimentRoutes);
+
 
 
 //app.use(allowCrossDomain);

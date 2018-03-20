@@ -1,10 +1,9 @@
+require("dotenv").config();
+var keys = require("../keys.js");
 var express = require('express');
 var router = express.Router();
-var cryptoRandomString = require('crypto-random-string');
 var igdb = require('igdb-api-node').default;
-var igdbClient = igdb('7253b0c0598ee124ad0824a44f9c7d08');
-var sequelize = require('sequelize');
-var Op = sequelize.Op;
+var igdbClient = igdb(keys.igdb.api_key);
 
 
 function createSearchTerm(param){
@@ -117,7 +116,18 @@ router.get("/games/:id", function(req, res){
             'rating',
             'summary',
             'storyline',
-            'aggregated_rating'
+            'franchise',
+            'rating',
+            'rating_count',
+            'aggregated_rating',
+            'aggregated_rating_count',
+            'total_rating',
+            'total_rating_count',
+            'developers',
+            'game_engines',
+            'time_to_beat',
+            'platforms',
+            'cover'
         ]).then(function (result) {
             console.log(result);
 
